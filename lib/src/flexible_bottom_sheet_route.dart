@@ -66,6 +66,7 @@ Future<T?> showFlexibleBottomSheet<T>({
   bool isSafeArea = false,
   BoxDecoration? decoration,
   bool useRootScaffold = true,
+  Duration? reverseDuration,
 }) {
   assert(debugCheckHasMediaQuery(context));
   assert(debugCheckHasMaterialLocalizations(context));
@@ -93,6 +94,7 @@ Future<T?> showFlexibleBottomSheet<T>({
       isSafeArea: isSafeArea,
       decoration: decoration,
       useRootScaffold: useRootScaffold,
+      reverseDuration: reverseDuration,
     ),
   );
 }
@@ -213,6 +215,7 @@ class FlexibleBottomSheetRoute<T> extends PopupRoute<T> {
   final Duration? duration;
   final bool isSafeArea;
   final bool useRootScaffold;
+  final Duration? reverseDuration;
 
   @override
   final String? barrierLabel;
@@ -221,10 +224,14 @@ class FlexibleBottomSheetRoute<T> extends PopupRoute<T> {
   Duration get transitionDuration => duration ?? _bottomSheetEnterDuration;
 
   @override
+  Duration get reverseTransitionDuration =>
+      reverseDuration ?? _bottomSheetExitDuration;
+
+  @override
   bool get barrierDismissible => isDismissible;
 
   @override
-  Color? get barrierColor => isModal
+  Color get barrierColor => isModal
       ? barrierBottomSheetColor ?? Colors.black54
       : const Color(0x00FFFFFF);
 
@@ -255,6 +262,7 @@ class FlexibleBottomSheetRoute<T> extends PopupRoute<T> {
     this.bottomSheetBorderRadius,
     this.barrierBottomSheetColor,
     this.duration,
+    this.reverseDuration,
     super.settings,
   });
 
@@ -262,7 +270,7 @@ class FlexibleBottomSheetRoute<T> extends PopupRoute<T> {
   AnimationController createAnimationController() {
     _animationController = AnimationController(
       duration: transitionDuration,
-      reverseDuration: _bottomSheetExitDuration,
+      reverseDuration: reverseTransitionDuration,
       debugLabel: 'FlexibleBottomSheet',
       vsync: navigator!.overlay!,
     );
