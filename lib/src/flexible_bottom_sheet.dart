@@ -239,26 +239,26 @@ class _FlexibleBottomSheetState<T> extends State<FlexibleBottomSheet<T>> {
 
   // Scroll to focused widget.
   void _animateToFocused(ScrollController controller) {
-    if (FocusManager.instance.primaryFocus == null || _isClosing) return;
+    // if (FocusManager.instance.primaryFocus == null || _isClosing) return;
 
-    _widgetBinding.addPostFrameCallback((_) {
-      final keyboardHeight = MediaQuery.viewInsetsOf(context).bottom;
-      final widgetHeight = FocusManager.instance.primaryFocus!.size.height;
-      final widgetOffset = FocusManager.instance.primaryFocus!.offset.dy;
-      final screenHeight = MediaQuery.sizeOf(context).height;
+    // _widgetBinding.addPostFrameCallback((_) {
+    //   final keyboardHeight = MediaQuery.viewInsetsOf(context).bottom;
+    //   final widgetHeight = FocusManager.instance.primaryFocus!.size.height;
+    //   final widgetOffset = FocusManager.instance.primaryFocus!.offset.dy;
+    //   final screenHeight = MediaQuery.sizeOf(context).height;
 
-      final targetWidgetOffset =
-          screenHeight - keyboardHeight - widgetHeight - 20;
-      final valueToScroll = widgetOffset - targetWidgetOffset;
-      final currentOffset = controller.offset;
-      if (valueToScroll > 0) {
-        controller.animateTo(
-          currentOffset + valueToScroll,
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.ease,
-        );
-      }
-    });
+    //   final targetWidgetOffset =
+    //       screenHeight - keyboardHeight - widgetHeight - 20;
+    //   final valueToScroll = widgetOffset - targetWidgetOffset;
+    //   final currentOffset = controller.offset;
+    //   if (valueToScroll > 0) {
+    //     controller.animateTo(
+    //       currentOffset + valueToScroll,
+    //       duration: const Duration(milliseconds: 200),
+    //       curve: Curves.ease,
+    //     );
+    //   }
+    // });
   }
 
   // Checking if the bottom sheet needs to be closed.
